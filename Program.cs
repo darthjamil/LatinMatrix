@@ -5,22 +5,29 @@ namespace LatinMatrix
 {
     class Program
     {
+        private static List<string> OutputLines = new List<string>();
+
         static void Main(string[] args)
         {
             var numTests = int.Parse(Console.ReadLine());
 
             for (var i = 1; i <= numTests; i++)
             {
-                Solve(i);
+                OutputLines.Add(Solve(i));
+            }
+
+            for (var i = 0; i < OutputLines.Count; i++)
+            {
+                Console.WriteLine(OutputLines[i]);
             }
         }
 
-        private static void Solve(int testNumber)
+        private static string Solve(int testNumber)
         {
             var n = int.Parse(Console.ReadLine());
-            
             var matrix = ReadMatrix(n);
-            OutputAnswers(n, matrix);
+
+            return GetOutput(testNumber, matrix);
         }
 
         private static int[][] ReadMatrix(int size)
@@ -50,13 +57,13 @@ namespace LatinMatrix
             return row;
         }
 
-        private static void OutputAnswers(int testNumber, int[][] matrix)
+        private static string GetOutput(int testNumber, int[][] matrix)
         {
             var k = GetTrace(matrix);
             var r = GetNumRowsWithRepeatedElements(matrix);
             var c = GetNumColsWithRepeatedElements(matrix);
 
-            Console.WriteLine($"Case #{testNumber}: {k} {r} {c}");
+            return $"Case #{testNumber}: {k} {r} {c}";
         }
 
         private static int GetNumRowsWithRepeatedElements(int[][] matrix)
